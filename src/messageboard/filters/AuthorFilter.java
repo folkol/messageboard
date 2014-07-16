@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
 
 
 @WebFilter("/*")
-public class AuthorFilter implements Filter {
+public class AuthorFilter implements Filter
+{
 
     @Override
     public void init(FilterConfig fConfig) throws ServletException {

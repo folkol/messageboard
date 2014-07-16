@@ -1,8 +1,8 @@
 package messageboard.model;
 
 
-public class Message {
-
+public class Message
+{
     private final String author;
     private final String message;
 

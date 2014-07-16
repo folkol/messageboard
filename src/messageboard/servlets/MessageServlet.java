@@ -13,8 +13,10 @@ import javax.sql.DataSource;
 import messageboard.dao.MessageService;
 import messageboard.model.Message;
 
+
 @WebServlet("/index.html")
-public class MessageServlet extends HttpServlet {
+public class MessageServlet extends HttpServlet
+{
 	private static final long serialVersionUID = 1L;
 	private MessageService messageService;
 

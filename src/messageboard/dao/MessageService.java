@@ -12,8 +12,8 @@ import javax.sql.DataSource;
 import messageboard.model.Message;
 
 
-public class MessageService {
-
+public class MessageService
+{
     private final DataSource ds;
 
     public MessageService(DataSource ds) {
