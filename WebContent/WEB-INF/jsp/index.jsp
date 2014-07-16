@@ -15,8 +15,10 @@
         <input type="text" name="message" id="message" autofocus><br>
         <input type="submit" value="Submit">
     </form>
-    <c:forEach var="message" items="${messages}">
-    ${message.author}: ${message.message}
-    </c:forEach>
+    <ul>
+        <c:forEach var="message" items="${messages}">
+        <li>${message.author}: ${message.message}</li>
+        </c:forEach>
+    </ul>
 </body>
 </html>
