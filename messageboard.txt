@@ -1,0 +1,48 @@
+== Preparations ==
+(If you want to run this on tomcat, you must add the default DS)
+* Download Connector/J and add the driver .jar to tomcat/lib (http://dev.mysql.com/downloads/connector/j/5.1.html, platform independent zip)
+* Configure a DataSource resource in conf/context.xml
+	<Context>
+	...
+		<Resource name="comp/DefaultDataSource" 
+		          username="javauser" 
+		          password="javapass" 
+		          driverClassName="com.mysql.jdbc.Driver"
+		          url="jdbc:mysql://localhost:3306/messageboard"
+		          auth="Container" 
+		          type="javax.sql.DataSource"
+		          maxActive="100" 
+		          maxIdle="30" 
+		          maxWait="10000"
+		          initialSize="1"/>
+	...
+	</Context>
+(Keep in mind that a server in Eclipse is using a copy of the config files, so recreate if after configuration change)
+* Create the messageboard database in MySQL (SQLyog)
+(Table messages: id int (PK, auto increment), author varchar, message varchar)
+
+== Tutorial ==
+* Create new project (Ctrl+N -> Dynamic Web Project. Name it messageboard.)
+* Add servlet-api.jar to the project (Download, or copy from tomcat/lib. Add to build path.)
+* Add a new servlet (Ctrl+N -> Servlet, com.folkol.servlets ChatServlet. Map it to index.html)
+* Add a new JSP File (Ctrl+N -> JSP File. Call it index.jsp and put it under WebContent/WEB-INF/jsp.)
+* Let the MessageServlet forward to this jsp (request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response))
+* Add a MessageService (Ctrl+N -> Java Class. messageboard.dao.MessageService)
+* Add method "findAll()" to message service.
+* Set the result from MessagService::findAll() to the request attribute "messages" in the servlet.
+* Download jstl-1.2.jar and add it to WEB-INF/lib, use it to loop over the messages in index.jsp
+* Loop over "messages" in the jsp, and print it in some fancy way!
+* Add a form to the jsp
+* Add getPost to the servlet. Let it store a new Message using the MessageService
+
+* Add JUnit test for AuthorFilter (Ctrl+N -> JUnit Test Case)
+
+* Add Mockito
+* Rewrite the test with Mockito
+
+
+Port in use:
+netstat -ano | grep 9990 (NVidia Network Service)
+
+Resources:
+https://blogs.oracle.com/arungupta/entry/default_datasource_in_java_ee
