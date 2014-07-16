@@ -24,7 +24,7 @@ public class MessageService
         List<Message> messages = new ArrayList<>();
         try (Connection conn = ds.getConnection()) {
             Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM messages");
+            ResultSet result = statement.executeQuery("SELECT * FROM messages ORDER BY id DESC");
             while(result.next()) {
                 String author = result.getString("author");
                 String message = result.getString("message");
