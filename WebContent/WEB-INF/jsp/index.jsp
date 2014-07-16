@@ -10,7 +10,7 @@
 <body>
     <form action="index.html" method="POST">
         <label for="author">Name</label>
-        <input type="text" name="author" id="author" value="${username}" required><br>
+        <input type="text" name="author" id="author" value="${author}" required><br>
         <label for="message">Message</label>
         <input type="text" name="message" id="message" autofocus><br>
         <input type="submit" value="Submit">
