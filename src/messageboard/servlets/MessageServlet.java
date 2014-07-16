@@ -1,10 +1,6 @@
 package messageboard.servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -14,28 +10,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import messageboard.dao.MessageService;
+import messageboard.model.Message;
+
 @WebServlet("/index.html")
 public class MessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MessageService messageService;
 
 	@Resource(name = "comp/DefaultDataSource")
 	DataSource ds;
 
 	@Override
+	public void init() throws ServletException {
+	    messageService = new MessageService(ds);
+	}
+
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException
 	{
-	    try (Connection conn = ds.getConnection()) {
-	        Statement statement = conn.createStatement();
-	        ResultSet result = statement.executeQuery("SELECT * FROM messages");
-	        while(result.next()) {
-	            System.out.println(result.getString("author"));
-	        }
-	        request.setAttribute("comments", "hej");
-	        request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
-	    } catch (SQLException e) {
-            e.printStackTrace();
-        }
+	    request.setAttribute("messages", messageService.findAll());
+	    request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException
+	{
+	    messageService.add(new Message(request.getParameter("author"), request.getParameter("message")));
+	    response.sendRedirect("index.html");
 	}
 
 }
